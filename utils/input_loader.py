@@ -35,12 +35,12 @@ class InputLoader:
         url = '%s/%d/%s/%d/%s' % (BASE_URL, YEAR, DAY, self.day, INPUT)
         print('Reading input from location: ' + url)
         r = requests.get(url, cookies=self.cookies)
-        if r.status_code >= 400:
+        if r.status_code != 200:
             print('Advent of Code returned code: %d \nExiting...' % r.status_code)
             exit(1)
         print('Creating new file ' + self.get_input_filename())
         with open(self.get_input_filename(), 'w') as file:
-            file.write(r.text.strip())
+            file.write(r.text)
 
     def load_input_from_file(self):
         print('Loading file: ' + self.get_input_filename())
