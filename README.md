@@ -45,6 +45,11 @@ If I wanted to run tests for day 1 part 2:
 $ python main.py --test 1 2
 ```
 
+To auto-submit your answer for day 1 part 1:
+```commandline
+$  python main.py --submit 1 1
+```
+
 If you want to run more tests against a specific days problems, you can add input and output files to the `input/test/{day_number}/{part_number}/(input|output){test_number}`
 If you add an input file without an output file, things may explode. 
 
