@@ -5,6 +5,12 @@ class Day:
         self.input_stream = input_stream
         self.output_stream = output_stream
 
+    def part(self, part_num):
+        if part_num == 1:
+            self.part_one()
+        elif part_num == 2:
+            self.part_two()
+
     def part_one(self):
         raise NotImplemented
 
@@ -12,5 +18,5 @@ class Day:
         raise NotImplemented
 
     def p(self, *args):
-        print(*args, file=self.output_stream)
+        print(*args, end='', file=self.output_stream)
 
