@@ -11,6 +11,8 @@ DAY = 'day'
 INPUT = 'input'
 OUTPUT = 'output'
 ANSWER = 'answer'
+LEADERBOARD = 'leaderboard/private/view/'
+SHOPIFY_BOARD = LEADERBOARD + '179752.json'
 INPUT_DIR = './input/day'
 PART_DIR = 'part'
 TEST_INPUT_DIR = './input/test'
@@ -96,6 +98,18 @@ class IOLoader:
         soup = BeautifulSoup(result, features="html.parser")
         print("\n".join(soup.main.article.p.text.split('.')))
 
+    def get_ranking(self, board='shopify'):
+        boards = {
+            'shopify': SHOPIFY_BOARD
+        }
+        board_to_load = boards[board]
+        if board_to_load is None:
+            exit('Board ' + board + ' not found')
+        self.load_session_token()
+        url = '%s/%d/%s' % (BASE_URL, self.year, board_to_load)
+        r = requests.get(url, cookies=self.cookies)
+        return r.json()
+
     def finish(self):
         if not self.submit:
             return
@@ -103,8 +117,6 @@ class IOLoader:
 
 
 if __name__ == '__main__':
-    x = IOLoader(year=2021, day=1, part_num=2, test=False, submit=True)
-    s = StringIO()
-    print('1158', end='', file=s)
-    x.output_buffer = s
-    x.submit_answer()
+    io = IOLoader(year=2021)
+    res = io.get_ranking()
+    print('')

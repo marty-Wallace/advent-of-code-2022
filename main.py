@@ -5,6 +5,7 @@ from timeit import default_timer as timer
 
 from utils.day_loader import DayLoader
 from utils.io_loader import IOLoader
+from utils.ranking import Ranking
 
 
 def main():
@@ -18,7 +19,12 @@ def main():
             exit(1)
 
     args = sys.argv[1:]
-    test_flag, submit_flag = False, False
+    rank_flag = test_flag = submit_flag = False
+
+    check_args(args)
+    if args[0] == '--ranking' or args[0] == '-r':
+        rank_flag = True
+        args = args[1:]
 
     check_args(args)
     if args[0] == '--test' or args[0] == '-t':
@@ -32,13 +38,15 @@ def main():
 
     check_args(args)
     day_num = int(args[0])
-    if len(args) < 2:
+    if len(args) < 2 and not rank_flag:
         print("No part supplied. Defaulting to part 1")
         part = 1
     else:
         part = int(args[1])
 
-    if test_flag:
+    if rank_flag:
+        Ranking().get_ranking_for_day(day_num)
+    elif test_flag:
         print('Discovering tests for day: %d, part: %d' % (day_num, part))
         discover_tests(day_num, part)
     else:
